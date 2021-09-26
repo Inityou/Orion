@@ -35,10 +35,10 @@ ACharacterCPP::ACharacterCPP()
 
 	// ДВижение персонажа
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
-	GetCharacterMovement()->JumpZVelocity = 640.0f;
+	GetCharacterMovement()->RotationRate = FRotator(0.0f, 500.0f, 0.0f);
+	GetCharacterMovement()->JumpZVelocity = 80.0f;
 	GetCharacterMovement()->AirControl = 0.2f;
-	GetCharacterMovement()->MaxWalkSpeed = 750.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 700.0f;
 }
 
 
