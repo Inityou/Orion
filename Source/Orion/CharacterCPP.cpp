@@ -27,11 +27,20 @@ ACharacterCPP::ACharacterCPP()
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->bUsePawnControlRotation = true;
 
+	// Настраиваем Spring arm
+	CameraBoom1 = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom1"));
+	CameraBoom1->SetupAttachment(RootComponent);
+
+
 	// Настраиваем камеру
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
+	FollowCamera-> FieldOfView = 120;
 
+	// Настраиваем камеру от 1 лица
+	FollowCamera1 = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera1"));
+	FollowCamera1->SetupAttachment(CameraBoom1, USpringArmComponent::SocketName);
 
 	// ДВижение персонажа
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -47,7 +56,6 @@ ACharacterCPP::ACharacterCPP()
 void ACharacterCPP::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -71,6 +79,8 @@ void ACharacterCPP::SetupPlayerInputComponent(UInputComponent* PlayerInputCompon
 	//Биндим движение по оси XY
 	PlayerInputComponent->BindAxis("MoveForward", this, &ACharacterCPP::MoveX);
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACharacterCPP::MoveY);
+	// Биндим UI элементы
+	PlayerInputComponent->BindAction("UI", IE_Pressed, this, &ACharacterCPP::UI_Camera);
 }
 void ACharacterCPP::MoveY(float Axis){
 	if ((Controller != NULL) &&(Axis != 0.0f)) {
@@ -80,7 +90,6 @@ void ACharacterCPP::MoveY(float Axis){
 
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		AddMovementInput(Direction, Axis);
-
 	}
 }
 
@@ -109,4 +118,9 @@ void ACharacterCPP::StopJumping()
 	if (Controller != NULL) {
 		ACharacter::StopJumping();
 	}
+}
+
+void ACharacterCPP::UI_Camera()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("This is an on screen message!"));
 }
