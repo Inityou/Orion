@@ -30,6 +30,8 @@ ACharacterCPP::ACharacterCPP()
 	// Настраиваем Spring arm
 	CameraBoom1 = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom1"));
 	CameraBoom1->SetupAttachment(RootComponent);
+	CameraBoom1->TargetArmLength = -40.0f;
+	CameraBoom1->TargetOffset[2] = 60.0f;
 
 
 	// Настраиваем камеру
