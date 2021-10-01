@@ -30,7 +30,7 @@ ACharacterCPP::ACharacterCPP()
 	CameraBoom->SocketOffset[0] = 100.0f;
 	CameraBoom->SocketOffset[1] = 75.0f;
 	CameraBoom->SocketOffset[2] = 50.0f;
-
+	CameraBoom->SetupAttachment(GetMesh());
 
 
 	// Настраиваем камеру
@@ -130,10 +130,10 @@ void ACharacterCPP::UI_Camera()
 		bUseControllerRotationRoll = true;
 	}
 	else {
-		CameraBoom->TargetArmLength = 250.0f;
+		CameraBoom->TargetArmLength = 300.0f;
 		CameraBoom->TargetOffset[2] = 0.0f;
-		CameraBoom->SocketOffset[2] = 50.0f;
-		CameraBoom->SocketOffset[1] = 75.0f;
+		CameraBoom->SocketOffset[2] = 70.0f;
+		CameraBoom->SocketOffset[1] = 45.0f;
 		CameraBoom->SocketOffset[0] = 100.0f;
 		bUseControllerRotationYaw = false;
 		bUseControllerRotationRoll = false;
