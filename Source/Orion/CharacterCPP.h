@@ -19,16 +19,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class USpringArmComponent* CameraBoom;
 
-	/// <summary>/// “а сама€ рука, котора€ держит камеру/// </summary>
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-		class USpringArmComponent* CameraBoom1;
-
 	/// <summary>/// ќбъ€вл€ем камеру/// </summary>
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class UCameraComponent* FollowCamera;
-	/// <summary>/// ќбъ€вл€ем камеру от 1 лица/// </summary>
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
-		class UCameraComponent* FollowCamera1;
 	/// <summary>/// ќбъ€вл€ем мотоды движени€ /// </summary>
 	void MoveX(float Axis);
 	void MoveY(float Axis);

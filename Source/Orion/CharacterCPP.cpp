@@ -8,7 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-
+#include "Components/SkeletalMeshComponent.h"
 // Sets default values
 ACharacterCPP::ACharacterCPP()
 {
@@ -26,30 +26,26 @@ ACharacterCPP::ACharacterCPP()
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
 	CameraBoom->SetupAttachment(RootComponent);
 	CameraBoom->bUsePawnControlRotation = true;
+	CameraBoom->TargetArmLength = 250.0f;
+	CameraBoom->SocketOffset[0] = 100.0f;
+	CameraBoom->SocketOffset[1] = 75.0f;
+	CameraBoom->SocketOffset[2] = 50.0f;
 
-	// Настраиваем Spring arm
-	CameraBoom1 = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom1"));
-	CameraBoom1->SetupAttachment(RootComponent);
-	CameraBoom1->TargetArmLength = -40.0f;
-	CameraBoom1->TargetOffset[2] = 60.0f;
 
 
 	// Настраиваем камеру
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
-	FollowCamera-> FieldOfView = 120;
+	FollowCamera-> FieldOfView = 120.0f;
 
-	// Настраиваем камеру от 1 лица
-	FollowCamera1 = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera1"));
-	FollowCamera1->SetupAttachment(CameraBoom1, USpringArmComponent::SocketName);
 
 	// ДВижение персонажа
 	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
+	GetCharacterMovement()->RotationRate = FRotator(110.0f, 540.0f, 0.0f);
 	GetCharacterMovement()->JumpZVelocity = 640.0f;
 	GetCharacterMovement()->AirControl = 0.2f;
-	GetCharacterMovement()->MaxWalkSpeed = 750.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 650.0f;
 }
 
 
@@ -124,5 +120,23 @@ void ACharacterCPP::StopJumping()
 
 void ACharacterCPP::UI_Camera()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("This is an on screen message!"));
+	if (CameraBoom->TargetArmLength > 0.0f) {
+		CameraBoom->TargetArmLength = 0.0f;
+		CameraBoom->TargetOffset[2] = 40.0f;
+		CameraBoom->SocketOffset[2] = 40.0f;
+		CameraBoom->SocketOffset[1] = 0.0f;
+		CameraBoom->SocketOffset[0] = 22.0f;
+		bUseControllerRotationYaw = true;
+		bUseControllerRotationRoll = true;
+	}
+	else {
+		CameraBoom->TargetArmLength = 250.0f;
+		CameraBoom->TargetOffset[2] = 0.0f;
+		CameraBoom->SocketOffset[2] = 50.0f;
+		CameraBoom->SocketOffset[1] = 75.0f;
+		CameraBoom->SocketOffset[0] = 100.0f;
+		bUseControllerRotationYaw = false;
+		bUseControllerRotationRoll = false;
+	}
+
 }
