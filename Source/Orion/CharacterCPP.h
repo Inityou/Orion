@@ -16,12 +16,15 @@ public:
 	ACharacterCPP();
 
 	/// <summary>/// Та самая рука, которая держит камеру/// </summary>
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		class USpringArmComponent* CameraBoom;
 
 	/// <summary>/// Объявляем камеру/// </summary>
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 		class UCameraComponent* FollowCamera;
+
+
+
 	/// <summary>/// Объявляем мотоды движения /// </summary>
 	void MoveX(float Axis);
 	void MoveY(float Axis);

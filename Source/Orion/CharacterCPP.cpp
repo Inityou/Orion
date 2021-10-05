@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "UObject/ConstructorHelpers.h"	
 // Sets default values
 ACharacterCPP::ACharacterCPP()
 {
@@ -16,6 +17,12 @@ ACharacterCPP::ACharacterCPP()
 	PrimaryActorTick.bCanEverTick = true;
 	// устанавлваем размер капсуле
 	GetCapsuleComponent()->InitCapsuleSize(42.0f,96.0f);
+		
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> AlternateMeshAsset(TEXT("SkeletalMesh'/Game/Mannequin/Character/Mesh/SK_Mannequin.SK_Mannequin'"));
+	if (AlternateMeshAsset.Succeeded()) {
+		GetMesh()->SetSkeletalMesh(AlternateMeshAsset.Object);	
+	}
+
 
 	// Крч тонкости камеры (посмотрим возможно уберу)
 	bUseControllerRotationPitch = false;
@@ -24,13 +31,12 @@ ACharacterCPP::ACharacterCPP()
 
 	// Настраиваем Spring arm
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
-	CameraBoom->SetupAttachment(RootComponent);
+	CameraBoom->SetupAttachment(GetMesh());
 	CameraBoom->bUsePawnControlRotation = true;
 	CameraBoom->TargetArmLength = 250.0f;
 	CameraBoom->SocketOffset[0] = 100.0f;
 	CameraBoom->SocketOffset[1] = 75.0f;
 	CameraBoom->SocketOffset[2] = 50.0f;
-	CameraBoom->SetupAttachment(GetMesh());
 
 
 	// Настраиваем камеру
